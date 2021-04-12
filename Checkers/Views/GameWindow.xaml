@@ -1,0 +1,41 @@
+﻿<Window x:Class="Checkers.Views.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Checkers.ViewModels"
+        mc:Ignorable="d"
+        Title="GameWindow" Height="700" Width="656">
+    <Window.DataContext>
+        <local:GameVM />
+    </Window.DataContext>
+    <Window.Resources>
+        <ImageBrush ImageSource="D:\FACULT 2020-2021\MVP\Checkers\Checkers\Resources\Sprites\board.png" x:Key="Board"/>
+    </Window.Resources>
+    <ItemsControl Name="grid" ItemsSource="{Binding GameBoard}" VerticalAlignment="Bottom" Height="640" Background="{StaticResource Board}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <ItemsControl ItemsSource="{Binding}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="80" Height="80">
+                                <Button Command="{Binding ClickCommand}" CommandParameter="{Binding SimpleCell}">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Image Source="{Binding SimpleCell.Color}" Stretch="UniformToFill" />
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</Window>
