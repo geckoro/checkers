@@ -5,37 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Checkers.ViewModels"
         mc:Ignorable="d"
-        Title="GameWindow" Height="700" Width="656">
+        Title="GameWindow" Height="730" Width="656">
     <Window.DataContext>
         <local:GameVM />
     </Window.DataContext>
     <Window.Resources>
+        <local:GameVM x:Key="gameVM"/>
+        <local:MenuItemVM x:Key="menuItemVM"/>
         <ImageBrush ImageSource="D:\FACULT 2020-2021\MVP\Checkers\Checkers\Resources\Sprites\board.png" x:Key="Board"/>
     </Window.Resources>
-    <ItemsControl Name="grid" ItemsSource="{Binding GameBoard}" VerticalAlignment="Bottom" Height="640" Background="{StaticResource Board}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <ItemsControl ItemsSource="{Binding}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Width="80" Height="80">
-                                <Button Command="{Binding ClickCommand}" CommandParameter="{Binding SimpleCell}">
-                                    <Button.Template>
-                                        <ControlTemplate>
-                                            <Image Source="{Binding SimpleCell.Color}" Stretch="UniformToFill" />
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" Command="{Binding NewCommand, Source={StaticResource menuItemVM}}"/>
+                <MenuItem Header="_Save" Command="{Binding SaveCommand, Source={StaticResource menuItemVM}}" />
+                <MenuItem Header="_Load" Command="{Binding LoadCommand, Source={StaticResource menuItemVM}}"/>
+                <Separator/>
+                <MenuItem Header="Se_ttings" Command="{Binding SettingsCommand, Source={StaticResource menuItemVM}}"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Command="{Binding AboutCommand, Source={StaticResource menuItemVM}}"/>
+            </MenuItem>
+        </Menu>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock Text="{Binding Score.Message}" FontSize="20"/>
+            <TextBlock Text="{Binding Turn.Message}" HorizontalAlignment="Right" FontSize="20"/>
+        </DockPanel>
+        <ItemsControl Name="grid" ItemsSource="{Binding GameBoard}" VerticalAlignment="Bottom" Height="640" Background="{StaticResource Board}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="80" Height="80">
+                                    <Button Command="{Binding ClickCommand}" CommandParameter="{Binding SimpleCell}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Image Source="{Binding SimpleCell.Color}" Stretch="UniformToFill" />
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+
 </Window>

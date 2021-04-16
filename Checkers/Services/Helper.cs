@@ -1,4 +1,5 @@
 ﻿using Checkers.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,36 +15,90 @@ namespace Checkers.Services
     {
         public static Cell CurrentCell { get; set; }
         public static Cell PreviousCell { get; set; }
-        public static ObservableCollection<ObservableCollection<Cell>> InitGameBoard()
+
+        public static Game InitGame()
         {
             string jsonString;
-            ObservableCollection<ObservableCollection<Cell>> collection;
+            Game game;
 
             try
             {
                 jsonString = File.ReadAllText(@"..\..\Resources\Games\default.json");
-                collection = JsonSerializer.Deserialize<ObservableCollection<ObservableCollection<Cell>>>(jsonString);
+                game = JsonSerializer.Deserialize<Game>(jsonString);
             }
             catch (IOException)
             {
-                collection = new ObservableCollection<ObservableCollection<Cell>>();
+                game = new Game();
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
                 throw;
             }
-            return collection;
-        }
-        public static ObservableCollection<ObservableCollection<Cell>> LoadGameBoard()
-        {
-            return null;
+            return game;
         }
 
-
-        public static void SaveGameBoard(string name)
+        public static Game LoadGame(string path)
         {
+            string jsonString;
+            Game game;
 
+            try
+            {
+                jsonString = File.ReadAllText(path);
+                game = JsonSerializer.Deserialize<Game>(jsonString);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+
+            return game;
+        }
+
+        public static void UpdateStatistics(string winner)
+        {
+            string jsonString;
+            Statistics statistics;
+            try
+            {
+                jsonString = File.ReadAllText(@"..\..\Resources\Games\statistics.json");
+                statistics = JsonSerializer.Deserialize<Statistics>(jsonString);
+
+                if (winner == "Red")
+                {
+                    statistics.RedPlayers++;
+                }
+                else
+                {
+                    statistics.WhitePlayers++;
+                }
+
+                jsonString = JsonSerializer.Serialize(statistics);
+                File.WriteAllText(@"..\..\Resources\Games\statistics.json", jsonString);
+            }
+            catch (IOException)
+            {
+                statistics = new Statistics();
+
+                if (winner == "Red")
+                {
+                    statistics.RedPlayers++;
+                }
+                else
+                {
+                    statistics.WhitePlayers++;
+                }
+
+                jsonString = JsonSerializer.Serialize(statistics);
+                File.WriteAllText(@"..\..\Resources\Games\statistics.json", jsonString);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
         }
     }
 }

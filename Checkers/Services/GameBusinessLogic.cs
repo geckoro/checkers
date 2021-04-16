@@ -1,4 +1,5 @@
 ﻿using Checkers.Models;
+using Checkers.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,35 +12,37 @@ namespace Checkers.Services
     class GameBusinessLogic
     {
         private ObservableCollection<ObservableCollection<Cell>> cells;
+
         public GameBusinessLogic(ObservableCollection<ObservableCollection<Cell>> cells)
         {
             this.cells = cells;
         }
 
-        private void TurnCard(Cell cell)
-        {
-            //cell.DisplayedImage = cell.HidenImage;
-        }
-
-        private void TurnCardBack(Cell cell)
-        {
-            //cell.DisplayedImage = "/MVVMPairs;component/Resources/init.png";
-        }
-
         public void Move(Cell currentCell)
         {
-            //Helper.CurrentCell = currentCell;
-            //TurnCard(currentCell);
-            //if (Helper.PreviousCell != null)
-            //{
-            //    TurnCardBack(Helper.PreviousCell);
-            //}
-            //Helper.PreviousCell = currentCell;
+            Helper.CurrentCell = currentCell;
+            if (MovesLogic.IsMoveValid())
+            {
+                if (!MovesLogic.MakeMove())
+                    GameInformations.SwapPlayers();
+                return;
+            }
+            MovesLogic.HighlightPiece(Helper.CurrentCell);
+            if (Helper.PreviousCell != null)
+            {
+                MovesLogic.UnhighlightPiece(Helper.PreviousCell);
+            }
+            Helper.PreviousCell = currentCell;
         }
 
         public void ClickAction(Cell obj)
         {
-            Move(obj);
+            if (GameVM.CurrentPlayer.Name == "Red" && (MovesLogic.ColorPath[obj.Color] == "red-piece" || MovesLogic.ColorPath[obj.Color] == "red-king") ||
+                GameVM.CurrentPlayer.Name == "White" && (MovesLogic.ColorPath[obj.Color] == "white-piece" || MovesLogic.ColorPath[obj.Color] == "white-king") ||
+                obj.IsEmpty)
+            {
+                Move(obj);
+            }
         }
     }
 }

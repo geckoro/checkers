@@ -13,6 +13,7 @@ namespace Checkers.ViewModels
     class CellVM : BaseNotification
     {
         GameBusinessLogic bl;
+
         public CellVM(int x, int y, string color, bool isEmpty, GameBusinessLogic bl)
         {
             SimpleCell = new Cell(x, y, color, isEmpty);

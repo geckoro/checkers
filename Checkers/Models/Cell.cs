@@ -54,10 +54,12 @@ namespace Checkers.Models
         {
             X = x;
             Y = y;
-            if (color == "red")
+            if (color == "red-piece")
                 Color = "/Checkers;component/Resources/Sprites/red-piece.png";
-            else if (color == "white")
+            else if (color == "white-piece")
                 Color = "/Checkers;component/Resources/Sprites/white-piece.png";
+            else if (color == null)
+                Color = "/Checkers;component/Resources/Sprites/empty.png";
             else
                 Color = color;
             IsEmpty = isEmpty;

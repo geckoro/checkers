@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,16 +11,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Checkers.ViewModels;
 
 namespace Checkers.Views
 {
     /// <summary>
-    /// Interaction logic for GameWindow.xaml
+    /// Interaction logic for SettingsWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window
+    public partial class SettingsWindow : Window
     {
-        public GameWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
         }

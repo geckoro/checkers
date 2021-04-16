@@ -1,0 +1,21 @@
+﻿<Window x:Class="Checkers.Views.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Checkers.Views"
+        mc:Ignorable="d"
+        Title="AboutWindow" Height="300" Width="300">
+    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Orientation="Vertical" Width="200">
+            <TextBlock Text="Dușa George-Dănuț" HorizontalAlignment="Center"/>
+            <TextBlock Text="george.dusa@student.unitbv.ro" HorizontalAlignment="Center"/>
+            <TextBlock Text="grupa 10LF292" HorizontalAlignment="Center"/>
+            <TextBlock Text="Game description" HorizontalAlignment="Center" FontWeight="Black" Margin="0,10"/>
+            <TextBlock Text="To win, you have to capture the enemy pieces by jumping diagonally over them.
+You can also jump one square in front if there is no piece on it. To move backwards,
+you have to promote your pieces to kings by reaching the other side of the board." 
+                       HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,40 +1,32 @@
 ﻿using Checkers.Models;
 using Checkers.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 namespace Checkers.ViewModels
 {
     class GameVM
     {
         private GameBusinessLogic bl;
+
+        public static ObservableCollection<ObservableCollection<CellVM>> GameBoard { get; set; }
+        public static Player CurrentPlayer { get; set; }
+        public static Label Score { get; set; }
+        public static Label Turn { get; set; }
+        public static int RedPlayerScore { get; set; }
+        public static int WhitePlayerScore { get; set; }
+
         public GameVM()
         {
-            ObservableCollection<ObservableCollection<Cell>> board = Helper.InitGameBoard();
+            ObservableCollection<ObservableCollection<Cell>> board = Helper.InitGame().Board;
             bl = new GameBusinessLogic(board);
-            GameBoard = CellBoardToCellVMBoard(board);
-        }
 
-        private ObservableCollection<ObservableCollection<CellVM>> CellBoardToCellVMBoard(ObservableCollection<ObservableCollection<Cell>> board)
-        {
-            ObservableCollection<ObservableCollection<CellVM>> result = new ObservableCollection<ObservableCollection<CellVM>>();
-            for (int i = 0; i < board.Count; i++)
-            {
-                ObservableCollection<CellVM> line = new ObservableCollection<CellVM>();
-                for (int j = 0; j < board[i].Count; j++)
-                {
-                    Cell c = board[i][j];
-                    CellVM cellVM = new CellVM(c.X, c.Y, c.Color, c.IsEmpty, bl);
-                    line.Add(cellVM);
-                }
-                result.Add(line);
-            }
-            return result;
+            GameBoard = GameInformations.CellBoardToCellVMBoard(board, bl);
+            CurrentPlayer = new Player("Red");
+            RedPlayerScore = 0;
+            WhitePlayerScore = 0;
+            Score = new Label($"RED {RedPlayerScore}:{WhitePlayerScore} WHITE");
+            Turn = new Label($"{CurrentPlayer.Name} player has to move");
         }
-
-        public ObservableCollection<ObservableCollection<CellVM>> GameBoard { get; set; }
     }
 }
